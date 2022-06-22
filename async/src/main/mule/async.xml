@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b50e6d64-b50f-4edc-9180-f9a627f18c11" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="fa32da94-ce67-43a3-b33b-7f1466118d7d" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config2" doc:name="HTTP Listener config" doc:id="fb81edf6-1c43-4685-b309-17766bb49a33" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config3" doc:name="HTTP Listener config" doc:id="eb5b1030-2279-450f-9c01-886935669960" >
+		<http:listener-connection host="localhost" port="8082" />
+	</http:listener-config>
+	<flow name="asyncFlow" doc:id="9c240ae9-143f-430e-97f9-4072628a167c" >
+		<http:listener doc:name="Listener" doc:id="25f6d9b9-c4f3-4901-9495-c5a2e24a8158" config-ref="HTTP_Listener_config3" path="/async"/>
+		<logger level="INFO" doc:name="Logger" doc:id="287f1afe-7d4c-4f85-9fe4-ad8492170832" message="hey this is main flow"/>
+		<async doc:name="Async" doc:id="01d238a3-bbef-4352-9e78-fc3598067708" >
+			<logger level="INFO" doc:name="Logger" doc:id="ab58675b-c8fb-4576-8383-4e8bd0631dab" message="ONE"/>
+			<logger level="INFO" doc:name="Logger" doc:id="ad64f7f6-024a-49ad-99e0-d38ad970eb8e" message="TWO"/>
+			<logger level="INFO" doc:name="Logger" doc:id="4267c4ea-cc94-42e4-99af-cfb4aca1305a" message="THREE"/>
+		</async>
+		<flow-ref doc:name="Flow Reference" doc:id="021cd2b2-a3bf-4f55-b530-75343d0c6dad" name="asyncSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ecf8791d-29ce-468f-a1aa-d68737714000" />
+	</flow>
+	<sub-flow name="asyncSub_Flow" doc:id="687ea6ba-339f-4694-af5e-77ef593146d6" >
+		<logger level="INFO" doc:name="Logger" doc:id="38cf1d4b-94cd-4a5b-84ba-ce9910bcaead" message="SUBFLOW"/>
+	</sub-flow>
+</mule>
